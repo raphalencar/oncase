@@ -2,7 +2,7 @@ import scrapy
 from scrapy.crawler import CrawlerProcess
 from scrapy.loader import ItemLoader
 from scrapy.utils.project import get_project_settings
-from news.items import TecmundoItem
+from news.items import TecmundoItem, TecnoblogItem
 
 class TecmundoSpider(scrapy.Spider):
     name = 'Tecmundo'
@@ -29,11 +29,31 @@ class TecmundoSpider(scrapy.Spider):
 
         return l.load_item()
 
-# class TecnoblogSpider(scrapy.Spider):
-# 	name = 'Tecnoblog'
-#     allowed_domains = ['tecnoblog.net']
-#     start_urls = ['http://tecnoblog.net/categoria/news']
+class TecnoblogSpider(scrapy.Spider):
+	name = 'Tecnoblog'
+	allowed_domains = ['tecnoblog.net']
+	start_urls = ['http://tecnoblog.net/categoria/news']
 
-# process = CrawlerProcess(get_project_settings())
-# process.crawl(TecmundoSpider)
-# process.start()
+	def parse(self, response):
+	    for article in response.xpath('//*[@id="categoria"]//article//div[contains(@class, "texts")]//h2/a/@href'):
+	        # Pegando dados de cada noticia específica
+	        link = article.get()
+	       
+	        yield response.follow(link, self.parse_article)
+
+	def parse_article(self, response):
+		l = ItemLoader(item=TecnoblogItem(), response=response)
+
+		# utilizando xpath para retornar os campos	
+		l.add_value('link', response.url)
+		l.add_xpath('title', '//*[@id="post"]/header/div/h1/a/text()')
+		l.add_xpath('author', '//*[@id="author-single"]/a/text()')
+		l.add_xpath('date', '//*[@id="post"]/header//span/text()[2]')
+		l.add_xpath('text', '//*[@id="post"]//p//text()') 
+
+		return l.load_item()
+
+process = CrawlerProcess(get_project_settings())
+process.crawl(TecmundoSpider)
+process.crawl(TecnoblogSpider)
+process.start()
