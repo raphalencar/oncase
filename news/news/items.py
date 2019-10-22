@@ -9,7 +9,9 @@ def strip_processor(values):
 
 def get_correct_date_value(values):
 	for v in values:
-		return re.search(r'(\d+/\d+/\d+)', v)[0]
+		match = re.search(r'(\d+/\d+/\d+)', v)
+		if match is not None:
+			return match[0]
 
 class TecmundoItem(scrapy.Item):
     # definindo os campos
