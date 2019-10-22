@@ -52,4 +52,5 @@ class TecnoblogItem(scrapy.Item):
 	text = scrapy.Field(
 		output_processor=Join("")
 	)
+	tag = scrapy.Field()
 
