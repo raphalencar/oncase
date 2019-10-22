@@ -93,5 +93,5 @@ class TecnoblogSpider(scrapy.Spider):
 
 process = CrawlerProcess(get_project_settings())
 process.crawl(TecmundoSpider, limit_pages=1)
-process.crawl(TecnoblogSpider, limit_pages=2)
+process.crawl(TecnoblogSpider, limit_pages=1)
 process.start()

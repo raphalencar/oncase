@@ -15,13 +15,19 @@ def get_correct_date_value(values):
 
 class TecmundoItem(scrapy.Item):
     # definindo os campos
-	link = scrapy.Field()
-	title = scrapy.Field()
+	link = scrapy.Field(
+		output_processor=Join()
+	)
+	title = scrapy.Field(
+		output_processor=Join()
+	)
 	author = scrapy.Field(
 		input_processor=strip_processor,
 		output_processor=Join()
 	)
-	date = scrapy.Field()
+	date = scrapy.Field(
+		output_processor=Join()
+	)
 	text = scrapy.Field(
 		output_processor=Join("")
 	)
@@ -29,8 +35,12 @@ class TecmundoItem(scrapy.Item):
 
 class TecnoblogItem(scrapy.Item):
 	 # definindo os campos
-	link = scrapy.Field()
-	title = scrapy.Field()
+	link = scrapy.Field(
+		output_processor=Join()
+	)
+	title = scrapy.Field(
+		output_processor=Join()
+	)
 	author = scrapy.Field(
 		input_processor=strip_processor,
 		output_processor=Join()
