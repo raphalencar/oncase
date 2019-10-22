@@ -46,6 +46,7 @@ class TecmundoSpider(scrapy.Spider):
 		l.add_xpath('date', '//*[@id="js-article-date"]/strong/text()')
 		l.add_xpath('text', '//*[@id="js-main"]//div[contains(@class, "tec--article__body")]/p//text()') 
 		l.add_xpath('tag', '//*[@id="js-categories"]/a/text()')
+		l.add_value('blog', 'Tecmundo')
 
 		return l.load_item()
 
@@ -89,10 +90,11 @@ class TecnoblogSpider(scrapy.Spider):
 		l.add_xpath('date', '//*[@id="post"]/header//span/text()[2]')
 		l.add_xpath('text', '//*[@id="post"]//p//text()') 
 		l.add_xpath('tag', '//*[@id="post"]//div[contains(@class, "tags")]/a[contains(@rel, "tag")]/text()')
+		l.add_value('blog', 'Tecnoblog')
 
 		return l.load_item()
 
 process = CrawlerProcess(get_project_settings())
-process.crawl(TecmundoSpider, limit_pages=1)
-process.crawl(TecnoblogSpider, limit_pages=2)
+process.crawl(TecmundoSpider, limit_pages=60)
+process.crawl(TecnoblogSpider, limit_pages=100)
 process.start()

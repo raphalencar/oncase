@@ -2,7 +2,6 @@ import scrapy
 from scrapy.loader.processors import Join
 import re
 
-
 def strip_processor(values):
 	for v in values:
 		return v.strip()
@@ -31,7 +30,12 @@ class TecmundoItem(scrapy.Item):
 	text = scrapy.Field(
 		output_processor=Join("")
 	)
-	tag = scrapy.Field()
+	tag = scrapy.Field(
+		output_processor=Join(",")
+	)
+	blog = scrapy.Field(
+		output_processor=Join()
+	)
 
 class TecnoblogItem(scrapy.Item):
 	 # definindo os campos
@@ -52,5 +56,10 @@ class TecnoblogItem(scrapy.Item):
 	text = scrapy.Field(
 		output_processor=Join("")
 	)
-	tag = scrapy.Field()
+	tag = scrapy.Field(
+		output_processor=Join(",")
+	)
+	blog = scrapy.Field(
+		output_processor=Join()
+	)
 
