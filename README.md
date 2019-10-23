@@ -2,7 +2,7 @@
 Crawler e Scraper de notícias
 
 ### Descrição
-Processo de web crawling para estruturar dados das últimas notícias nos portais [Tecmundo](http://tecmundo.com.br/novidades) e [Tecnoblog](http://tecnoblog.net/categoria/news),
+Processo de web crawling para estruturar dados das últimas notícias dos portais [Tecmundo](http://tecmundo.com.br/novidades) e [Tecnoblog](http://tecnoblog.net/categoria/news),
 utilizando a lib [Scrapy](https://scrapy.org/) e [MongoDB](https://www.mongodb.com/) para persistência de dados.
 
 **Autor**: Raphael Brito Alencar<br>
