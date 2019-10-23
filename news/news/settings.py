@@ -24,6 +24,7 @@ ROBOTSTXT_OBEY = True
 # MongoDB Pipeline
 ITEM_PIPELINES = {
    'news.pipelines.MongoPipeline': 300,
+   'spidermon.contrib.scrapy.pipelines.ItemValidationPipeline': 800,
 }
 
 
@@ -40,6 +41,21 @@ ITEM_PIPELINES = {
 
 # Disable cookies (enabled by default)
 COOKIES_ENABLED = False
+
+# SPIDERMON
+SPIDERMON_ENABLED = True
+EXTENSIONS = {
+	'spidermon.contrib.scrapy.extensions.Spidermon': 500,
+}
+
+SPIDERMON_SPIDER_CLOSE_MONITORS = (
+	'news.monitors.SpiderCloseMonitorSuite',
+)
+
+SPIDERMON_VALIDATION_MODELS = (
+    'news.validators.TecmundoItem',
+    'news.validators.TecnoblogItem',
+)
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED = False
