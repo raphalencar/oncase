@@ -1,5 +1,5 @@
 from schematics.models import Model
-from schematics.types import URLType, StringType, ListType
+from schematics.types import StringType
 
 class TecmundoItem(Model):
 	link = StringType(required=True)
