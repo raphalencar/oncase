@@ -133,6 +133,69 @@ process.crawl(TecnoblogSpider, limit_pages=100)
 process.start()
 ```
 
+- Monitorando dados do crawler com Spidermon
+```python
+# settings.py
+# SPIDERMON
+SPIDERMON_ENABLED = True
+EXTENSIONS = {
+	'spidermon.contrib.scrapy.extensions.Spidermon': 500,
+}
+
+SPIDERMON_SPIDER_CLOSE_MONITORS = (
+	'news.monitors.SpiderCloseMonitorSuite',
+)
+
+SPIDERMON_VALIDATION_MODELS = (
+    'news.validators.TecmundoItem',
+    'news.validators.TecnoblogItem',
+)
+
+# monitorando a quantidade mínima de itens
+# monitors.py
+
+from spidermon import Monitor, MonitorSuite, monitors
+
+@monitors.name("Item count")
+class ItemCountMonitor(Monitor):
+
+	@monitors.name("Minimum number of items")
+	def test_minimum_number_of_items(self):
+		item_extracted = getattr(self.data.stats, "item_scraped_count", 0)
+		minimum_threshold = 1000
+		msg = "Extracted less than {} items".format(minimum_threshold)
+		self.assertTrue(item_extracted >= minimum_threshold, msg=msg)
+
+class SpiderCloseMonitorSuite(MonitorSuite):
+	monitors = [
+			ItemCountMonitor,
+		]
+        
+# Verificando integridade dos dados
+# validators.py
+
+from schematics.models import Model
+from schematics.types import StringType
+
+class TecmundoItem(Model):
+	link = StringType(required=True)
+	title = StringType(required=True)
+	author = StringType(required=True)
+	date = StringType()
+	text = StringType(required=True)
+	tag = StringType()
+	blog = StringType(required=True)
+
+class TecnoblogItem(Model):
+	link = StringType(required=True)
+	title = StringType(required=True)
+	author = StringType(required=True)
+	date = StringType()
+	text = StringType(required=True)
+	tag = StringType()
+	blog = StringType(required=True)
+```
+
 ### Análise dos dados
 Todas as análises estão presentes em [report.html](https://github.com/raphalencar/oncase/blob/master/report.html)
 
