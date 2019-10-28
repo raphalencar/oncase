@@ -23,6 +23,11 @@ pip3 install -r requirements.txt
 # Dependencias nao declaradas
 pip3 install spidermon schematics
 
+# Executa crawlers/scrappers
+cd news
+scrapy crawl
+cd ..
+
 # Roda o notebook
 docker run -it --rm -p 8888:8888 -p 4040:4040 -v $PWD:/home/jovyan/workspace jupyter/all-spark-notebook
 ```
