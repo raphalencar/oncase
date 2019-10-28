@@ -10,6 +10,23 @@ utilizando a lib [Scrapy](https://scrapy.org/) e [MongoDB](https://www.mongodb.c
 
 ### Build e execução
 
+**TL;DR**
+```sh
+# Sobe um mongodb - docker/docker-compose necessários
+docker-compose up -d
+
+# Configura virtualenv
+python3 -m venv venv
+. ./venv/bin/activate
+pip3 install -r requirements.txt
+
+# Dependencias nao declaradas
+pip3 install spidermon schematics
+
+# Roda o notebook
+docker run -it --rm -p 8888:8888 -p 4040:4040 -v $PWD:/home/jovyan/workspace jupyter/all-spark-notebook
+```
+
 **MacOs**
 1. Iniciar o servidor do Mongo
 ```

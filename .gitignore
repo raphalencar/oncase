@@ -141,3 +141,6 @@ dmypy.json
 # IPython
 profile_default/
 ipython_config.py
+
+# Virtual env
+venv/
